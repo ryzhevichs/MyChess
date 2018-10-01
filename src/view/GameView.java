@@ -16,6 +16,8 @@ public class GameView extends JPanel {
     private int boardWidth;
     private int boardHeight;
 
+    public JFrame frame;
+
     private int topPanelWidth = 30;
     private int topPanelHeight = 30;
 
@@ -47,10 +49,9 @@ public class GameView extends JPanel {
 
         this.add(boardView,BorderLayout.CENTER);
 
-        JFrame frame = new JFrame("Chess");
+        frame = new JFrame("Chess");
         frame.setBackground(new Color(255, 206, 158));
 
-        JPanel westPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.magenta);
 

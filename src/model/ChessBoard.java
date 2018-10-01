@@ -13,6 +13,8 @@ public class ChessBoard {
     private ArrayList<Piece> white;
     private ArrayList<Piece> black;
     private int turn;
+    private Piece kingWhite;
+    private Piece kingBlack;
 
     public ChessBoard(int width, int height){
         BOARD_WIDTH = width;
@@ -104,10 +106,10 @@ public class ChessBoard {
         p = new Rook(this, Player.BLACK);
         p.setCoordinate(7,7);
 
-        p = new King(this, Player.WHITE);
-        p.setCoordinate(4,0);
-        p = new King(this, Player.BLACK);
-        p.setCoordinate(4,7);
+        kingWhite = new King(this, Player.WHITE);
+        kingWhite.setCoordinate(4,0);
+        kingBlack = new King(this, Player.BLACK);
+        kingBlack.setCoordinate(4,7);
 
         p = new Queen(this, Player.WHITE);
         p.setCoordinate(3,0);
@@ -132,6 +134,12 @@ public class ChessBoard {
     }
 
     public void removePiece(Piece p){
+        if(p == getWhiteKing()) {
+            setWhiteKingNull();
+        }
+        if(p == getBlackKing()){
+            setBlackKingNull();
+        }
         int x = p.getXCoord();
         int y = p.getYCoord();
 
@@ -146,10 +154,20 @@ public class ChessBoard {
         }
     }
 
-    public int getTurn() { return turn;}
+    public void setWhiteKingNull(){
+        kingWhite = null;
+    }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
+    public void setBlackKingNull(){
+        kingBlack = null;
+    }
+
+    public Piece getWhiteKing(){
+        return kingWhite;
+    }
+
+    public Piece getBlackKing(){
+        return kingBlack;
     }
 
     public void changeTurn(){

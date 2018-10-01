@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.tools.javac.Main;
 import model.ChessBoard;
 import model.Coordinates;
 import model.pieces.King;
@@ -8,6 +9,7 @@ import model.Player;
 
 import view.GameView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,7 +22,6 @@ public class GameController {
         this.board = chessBoard;
         this.view = gameView;
         this.chosenPiece = null;
-
     }
 
     public void startGame() {
@@ -57,9 +58,9 @@ public class GameController {
     private void movePieceToOpponentCell(GameView view, Piece opponent) {
         ArrayList<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
-            if ( opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
+            if (opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
                 removeMessage(chosenPiece, opponent);
-                opponent.removeSelf();
+                removePiece(opponent);
 
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
                 chosenPiece = null;
@@ -81,6 +82,34 @@ public class GameController {
                 turnMessage();
                 view.redraw();
             }
+        }
+    }
+
+    private void gameOver(){
+        int result = JOptionPane.showConfirmDialog(
+                view,"Победа " + chosenPiece.getPlayer() +"\nНачать заново?",
+                "Шах и мат",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION) {
+           startGame();
+        }
+        if(result == JOptionPane.NO_OPTION){
+            System.exit(0);
+        }
+    }
+
+    private void removePiece(Piece p){
+        p.removeSelf();
+        if(isCheckmate()){
+           gameOver();
+        }
+
+    }
+
+    private boolean isCheckmate(){
+        if (board.getBlackKing() == null || board.getWhiteKing() == null){
+            return true;
+        } else {
+            return false;
         }
     }
 
