@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 import model.ChessBoard;
 import model.Coordinates;
@@ -27,7 +27,8 @@ public abstract class Piece {
         board.addPieceToList(this);
     }
 
-    public boolean isValidCoordinates( int x, int y){
+
+    public boolean isValidCoordinates(int x, int y){
         if (x < 0 || y < 0 || x >= board.getWidth() || y >= board.getHeight()) {
             return false;
         }
@@ -42,7 +43,8 @@ public abstract class Piece {
 
     }
 
-    public boolean setCoordinate( int x, int y){
+
+    public boolean setCoordinate(int x, int y){
         if(x > board.getWidth() || y > board.getHeight() || x < 0 || y <0 ){
             return false;
         }
@@ -68,16 +70,8 @@ public abstract class Piece {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Player getPlayer() {
         return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public ChessBoard getBoard() {
@@ -90,10 +84,6 @@ public abstract class Piece {
 
     public String getImagePath() {
         return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public int getXCoord() {

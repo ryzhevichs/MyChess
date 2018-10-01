@@ -2,7 +2,7 @@ package view;
 
 import controller.GameController;
 import model.ChessBoard;
-import model.Pieces.Piece;
+import model.pieces.Piece;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

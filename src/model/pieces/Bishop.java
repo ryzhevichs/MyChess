@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 import model.ChessBoard;
 import model.Coordinates;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Bishop extends Piece {
 
     public Bishop(ChessBoard board, Player player) {
-        super("bishop", board, player);
+        super("Конь", board, player);
         if(player == Player.WHITE){
             this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Bishop.png";
         } else {
@@ -20,8 +20,7 @@ public class Bishop extends Piece {
 
     public ArrayList<Coordinates> getPossibleCoordinates(){
         ArrayList<Coordinates> coord = new ArrayList<>();
-        int x = getXCoord();
-        int y = getYCoord();
+
         // вверх вправо
         for(int ix = getXCoord() + 1, jy = getYCoord() + 1; ix < board.getWidth() && jy < board.getHeight(); ix++, jy++ ) {
             if(isValidCoordinates(ix,jy)){

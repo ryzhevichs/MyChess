@@ -53,11 +53,6 @@ public class GameView extends JPanel {
         JPanel westPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.magenta);
-        westPanel.setBackground(Color.cyan);
-//        westPanel.setSize(new Dimension(ge));
-//        frame.add(westPanel,BorderLayout.SOUTH);
-//        frame.add(westPanel, BorderLayout.WEST);
-//        frame.add(bottomPanel, BorderLayout.SOUTH);
 
         frame.getContentPane().setPreferredSize(new Dimension(boardWidth + topPanelWidth,
                 boardHeight + topPanelHeight));

@@ -2,9 +2,10 @@ package controller;
 
 import model.ChessBoard;
 import model.Coordinates;
-import model.Pieces.Piece;
+import model.pieces.King;
+import model.pieces.Piece;
 import model.Player;
-import view.ChessBoardView;
+
 import view.GameView;
 
 import java.awt.*;
@@ -28,12 +29,10 @@ public class GameController {
         turnMessage();
     }
 
-
-    //// !!!!
-
     public void checkClick(Graphics2D g2d, double clickedX, double clickedY) {
         int x, y;
         Piece p;
+
         if (clickedX >= 0 && clickedY >= 0) {
             x = (int) (clickedX / 60);
             y = this.board.getHeight() - 1 - (int) (clickedY / 60);
@@ -59,7 +58,7 @@ public class GameController {
         ArrayList<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if ( opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
-                System.out.println(chosenPiece.getName() + " съел " + opponent.getName());
+                removeMessage(chosenPiece, opponent);
                 opponent.removeSelf();
 
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
@@ -91,5 +90,10 @@ public class GameController {
         } else {
             System.out.println("Ход Чёрных");
         }
+    }
+
+    private void removeMessage(Piece chosen, Piece opponent){
+        System.out.println(chosen.getPlayer() + " " +chosenPiece.getName() +
+                " съел " + opponent.getPlayer() + " " + opponent.getName());
     }
 }

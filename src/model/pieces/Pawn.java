@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 import model.ChessBoard;
 import model.Coordinates;
@@ -10,7 +10,7 @@ public class Pawn extends  Piece{
     private boolean isFirstMove ;
 
     public Pawn(ChessBoard board, Player player){
-        super("pawn", board,player);
+        super("Пешка", board,player);
         isFirstMove = true;
         if(player == Player.WHITE){
             this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Pawn.png";

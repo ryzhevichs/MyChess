@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 import model.ChessBoard;
 import model.Coordinates;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public  class Knight extends  Piece {
 
     public Knight(ChessBoard board, Player player){
-        super("knight", board, player);
+        super("Слон", board, player);
         if(player == Player.WHITE){
             this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Knight.png";
         } else {
@@ -24,7 +24,6 @@ public  class Knight extends  Piece {
 
         int possibleMove = (player == Player.WHITE ? 1 : -1);
 
-        ChessBoard board = this.board;
         //вверх*2 вправо
         if(isValidCoordinates(x + 1, y + possibleMove * 2 )){
             coord.add(new Coordinates(x + 1, y + possibleMove * 2));
