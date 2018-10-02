@@ -5,6 +5,7 @@ import model.Coordinates;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Piece {
     private String name;
@@ -24,7 +25,7 @@ public abstract class Piece {
         this.xCoord = -1;
         this.yCoord = -1;
 
-        board.addPieceToList(this);
+        this.board.addPieceToList(this);
     }
 
 
@@ -58,9 +59,10 @@ public abstract class Piece {
         return  true;
     }
 
-    public abstract ArrayList<Coordinates> getPossibleCoordinates();
+    public abstract List<Coordinates> getPossibleCoordinates();
 
     public void removeSelf(){
+
         board.removePiece(this);
         this.xCoord = -1;
         this.yCoord = -1;

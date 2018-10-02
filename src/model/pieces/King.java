@@ -5,6 +5,7 @@ import model.Coordinates;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class King extends  Piece {
 
@@ -13,9 +14,9 @@ public class King extends  Piece {
     public King(ChessBoard board, Player player){
         super ("Король", board, player);
         if(player == Player.WHITE){
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_King.png";
+            this.imagePath = "src/wresources/White_King.png";
         } else {
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/Black_King.png";
+            this.imagePath = "src/wresources/Black_King.png";
         }
     }
 
@@ -23,8 +24,8 @@ public class King extends  Piece {
         return isKingLive;
     }
 
-    public ArrayList<Coordinates> getPossibleCoordinates(){
-        ArrayList<Coordinates> coord = new ArrayList<>();
+    public List<Coordinates> getPossibleCoordinates(){
+        List<Coordinates> coord = new ArrayList<>();
         //вверх
         if(isValidCoordinates(xCoord, yCoord + 1)){
             coord.add(new Coordinates(xCoord, yCoord + 1));
@@ -38,8 +39,8 @@ public class King extends  Piece {
             coord.add(new Coordinates(xCoord + 1, yCoord));
         }
         //вниз вправо
-        if(isValidCoordinates(xCoord + 1, yCoord + 1)){
-            coord.add(new Coordinates(xCoord + 1, yCoord + 1));
+        if(isValidCoordinates(xCoord + 1, yCoord - 1)){
+            coord.add(new Coordinates(xCoord + 1, yCoord - 1));
         }
         //вниз
         if(isValidCoordinates(xCoord, yCoord-1)){

@@ -1,36 +1,34 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import model.ChessBoard;
 import model.Coordinates;
-import model.pieces.King;
 import model.pieces.Piece;
 import model.Player;
 
 import view.GameView;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameController {
     private ChessBoard board;
     private GameView view;
     private Piece chosenPiece;
 
-    public GameController(ChessBoard chessBoard, GameView gameView) {
-        this.board = chessBoard;
-        this.view = gameView;
-        this.chosenPiece = null;
+    public GameController(){
+        board = new ChessBoard(8,8);
+        view = new GameView(board, 60);
+        view.setController(this);
     }
 
     public void startGame() {
+        view.initWindow();
         board.setPiecesOnBoard();
         view.redraw();
         turnMessage();
     }
 
-    public void checkClick(Graphics2D g2d, double clickedX, double clickedY) {
+    public void checkClick(double clickedX, double clickedY) {
         int x, y;
         Piece p;
 
@@ -56,15 +54,13 @@ public class GameController {
     }
 
     private void movePieceToOpponentCell(GameView view, Piece opponent) {
-        ArrayList<Coordinates> coord = chosenPiece.getPossibleCoordinates();
+        List<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if (opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
                 removeMessage(chosenPiece, opponent);
                 removePiece(opponent);
-
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
                 chosenPiece = null;
-
                 board.changeTurn();
                 turnMessage();
                 view.redraw();
@@ -73,7 +69,7 @@ public class GameController {
     }
 
     private void movePieceToEmptyCell(GameView view, int x, int y) {
-        ArrayList<Coordinates> coord = chosenPiece.getPossibleCoordinates();
+        List<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if (curCoord.getX() == x && curCoord.getY() == y) {
                 chosenPiece.setCoordinate(x, y);
@@ -98,11 +94,16 @@ public class GameController {
     }
 
     private void removePiece(Piece p){
+        if(p == board.getWhiteKing()) {
+            board.setWhiteKingNull();
+        }
+        if(p == board.getBlackKing()){
+            board.setBlackKingNull();
+        }
         p.removeSelf();
         if(isCheckmate()){
            gameOver();
         }
-
     }
 
     private boolean isCheckmate(){

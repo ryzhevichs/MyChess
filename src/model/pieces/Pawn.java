@@ -5,6 +5,7 @@ import model.Coordinates;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pawn extends  Piece{
     private boolean isFirstMove ;
@@ -13,14 +14,10 @@ public class Pawn extends  Piece{
         super("Пешка", board,player);
         isFirstMove = true;
         if(player == Player.WHITE){
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Pawn.png";
+            this.imagePath = "src/wresources/White_Pawn.png";
         } else {
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/Black_Pawn.png";
+            this.imagePath = "src/wresources/Black_Pawn.png";
         }
-    }
-
-    public boolean isFirstTimeMove(){
-        return  isFirstMove;
     }
 
     @Override
@@ -34,12 +31,12 @@ public class Pawn extends  Piece{
         return super.setCoordinate(x, y);
     }
 
-    public ArrayList<Coordinates> getPossibleCoordinates(){
+    public List<Coordinates> getPossibleCoordinates(){
         int x = xCoord;
         int y = yCoord;
         ChessBoard board = this.board;
 
-        ArrayList<Coordinates> coord = new ArrayList<>();
+        List<Coordinates> coord = new ArrayList<>();
         int possibleMove = (player == Player.WHITE? 1 : -1);
 
         if(y + possibleMove >= board.getHeight() || y + possibleMove < 0){

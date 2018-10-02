@@ -5,21 +5,22 @@ import model.Coordinates;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bishop extends Piece {
 
     public Bishop(ChessBoard board, Player player) {
-        super("Конь", board, player);
+        super("Слон", board, player);
         if(player == Player.WHITE){
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Bishop.png";
+            this.imagePath = "src/wresources/White_Bishop.png";
         } else {
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/Black_Bishop.png";
+            this.imagePath = "src/wresources/Black_Bishop.png";
         }
 
     }
 
-    public ArrayList<Coordinates> getPossibleCoordinates(){
-        ArrayList<Coordinates> coord = new ArrayList<>();
+    public List<Coordinates> getPossibleCoordinates(){
+        List<Coordinates> coord = new ArrayList<>();
 
         // вверх вправо
         for(int ix = getXCoord() + 1, jy = getYCoord() + 1; ix < board.getWidth() && jy < board.getHeight(); ix++, jy++ ) {

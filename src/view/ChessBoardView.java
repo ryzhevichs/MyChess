@@ -49,9 +49,7 @@ public class ChessBoardView extends JPanel{
         this.drawBoard(g2d);
         this.drawCoord(g2d);
 
-        controller.checkClick(g2d, mouseX, mouseY);
-//        controller.movePiece(mouseX, mouseY);
-
+        controller.checkClick(mouseX, mouseY);
     }
 
     public void drawCell(Graphics2D g2d, int x, int y, Color color){

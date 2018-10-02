@@ -134,12 +134,6 @@ public class ChessBoard {
     }
 
     public void removePiece(Piece p){
-        if(p == getWhiteKing()) {
-            setWhiteKingNull();
-        }
-        if(p == getBlackKing()){
-            setBlackKingNull();
-        }
         int x = p.getXCoord();
         int y = p.getYCoord();
 
@@ -155,10 +149,12 @@ public class ChessBoard {
     }
 
     public void setWhiteKingNull(){
+        System.out.println("Белый король занулен");
         kingWhite = null;
     }
 
     public void setBlackKingNull(){
+        System.out.println("Черный король занулен");
         kingBlack = null;
     }
 

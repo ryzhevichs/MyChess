@@ -5,20 +5,21 @@ import model.Coordinates;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public  class Knight extends  Piece {
 
     public Knight(ChessBoard board, Player player){
-        super("Слон", board, player);
+        super("Конь", board, player);
         if(player == Player.WHITE){
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/White_Knight.png";
+            this.imagePath = "src/wresources/White_Knight.png";
         } else {
-            this.imagePath = "E:/5sem/PPvIS/MyChess/src/wresources/Black_Knight.png";
+            this.imagePath = "src/wresources/Black_Knight.png";
         }
     }
 
-    public ArrayList<Coordinates> getPossibleCoordinates(){
-        ArrayList<Coordinates> coord = new ArrayList<>();
+    public List<Coordinates> getPossibleCoordinates(){
+        List<Coordinates> coord = new ArrayList<>();
         int x = getXCoord();
         int y = getYCoord();
 

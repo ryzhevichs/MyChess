@@ -59,7 +59,7 @@ public class GameView extends JPanel {
                 boardHeight + topPanelHeight));
         frame.pack();
         frame.setVisible(true);
-//        frame.setResizable(false);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.add(this);
