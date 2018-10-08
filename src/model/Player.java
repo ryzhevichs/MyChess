@@ -1,5 +1,13 @@
 package model;
 
 public enum  Player {
-    WHITE, BLACK
+    WHITE, BLACK;
+
+    public Player changePlayer(){
+        if(this == WHITE){
+            return BLACK;
+        } else {
+            return WHITE;
+        }
+    }
 }

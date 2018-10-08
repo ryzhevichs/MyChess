@@ -45,15 +45,15 @@ public class GameController {
                     if (chosenPiece == null) {
                         return;
                     }
-                    movePieceToOpponentCell(view, p);
+                    movePieceToOpponentCell(p);
                 }
             } else if (chosenPiece != null) {
-                movePieceToEmptyCell(view, x, y);
+                movePieceToEmptyCell(x, y);
             }
         }
     }
 
-    private void movePieceToOpponentCell(GameView view, Piece opponent) {
+    private void movePieceToOpponentCell(Piece opponent) {
         List<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if (opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
@@ -68,7 +68,7 @@ public class GameController {
         }
     }
 
-    private void movePieceToEmptyCell(GameView view, int x, int y) {
+    private void movePieceToEmptyCell(int x, int y) {
         List<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if (curCoord.getX() == x && curCoord.getY() == y) {
@@ -107,7 +107,7 @@ public class GameController {
     }
 
     private boolean isCheckmate(){
-        if (board.getBlackKing() == null || board.getWhiteKing() == null){
+        if(board.getBlackKing() == null || board.getWhiteKing() == null){
             return true;
         } else {
             return false;
@@ -115,7 +115,7 @@ public class GameController {
     }
 
     private void turnMessage() {
-        if (board.getPlayerForTurn() == Player.WHITE) {
+        if(board.getPlayerForTurn() == Player.WHITE) {
             System.out.println("Ход Белых");
         } else {
             System.out.println("Ход Чёрных");

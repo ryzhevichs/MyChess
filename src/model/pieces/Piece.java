@@ -29,21 +29,22 @@ public abstract class Piece {
     }
 
 
-    public boolean isValidCoordinates(int x, int y){
+    protected boolean isValidCoordinates(List<Coordinates> coord, int x, int y){
         if (x < 0 || y < 0 || x >= board.getWidth() || y >= board.getHeight()) {
-            return false;
-        }
-        if (board.getPieceAtCoordinate(x,y) == null){
             return true;
         }
-        if (board.getPieceAtCoordinate(x,y).getPlayer() != this.player){
+        if (board.getPieceAtCoordinate(x, y) == null){
+            coord.add(new Coordinates(x, y));
+            return false;
+        }
+
+        if (board.getPieceAtCoordinate(x, y).getPlayer() != player ){
+            coord.add(new Coordinates(x, y));
             return true;
         } else {
-            return false;
+            return true;
         }
-
     }
-
 
     public boolean setCoordinate(int x, int y){
         if(x > board.getWidth() || y > board.getHeight() || x < 0 || y <0 ){
@@ -74,14 +75,6 @@ public abstract class Piece {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public ChessBoard getBoard() {
-        return board;
-    }
-
-    public void setBoard(ChessBoard board) {
-        this.board = board;
     }
 
     public String getImagePath() {

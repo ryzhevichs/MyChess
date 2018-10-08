@@ -22,35 +22,27 @@ public class Rook extends  Piece {
 
         // вверх
         for(int y = yCoord + 1; y < board.getHeight(); y++) {
-            if(isValidCoordinates(xCoord, y)){
-                coord.add(new Coordinates(xCoord, y));
-                continue;
+            if(isValidCoordinates(coord, xCoord, y)) {
+                break;
             }
-            break;
         }
         // вниз
         for(int y = yCoord - 1; y < board.getHeight() && y >= 0; y--) {
-            if(isValidCoordinates(xCoord, y)){
-                coord.add(new Coordinates(xCoord, y));
-                continue;
+            if(isValidCoordinates(coord, xCoord, y)) {
+                break;
             }
-            break;
         }
         // влево
         for(int x = xCoord - 1; x >= 0; x--) {
-            if(isValidCoordinates(x, yCoord)){
-                coord.add(new Coordinates(x, yCoord));
-                continue;
+            if(isValidCoordinates(coord, x, yCoord)) {
+                break;
             }
-            break;
         }
         // вправо
         for(int x = xCoord + 1; x < board.getWidth(); x++) {
-            if(isValidCoordinates(x, yCoord)){
-                coord.add(new Coordinates(x, yCoord));
-                continue;
+            if(isValidCoordinates(coord, x, yCoord)) {
+                break;
             }
-            break;
         }
         return coord;
     }

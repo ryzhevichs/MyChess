@@ -27,38 +27,21 @@ public class King extends  Piece {
     public List<Coordinates> getPossibleCoordinates(){
         List<Coordinates> coord = new ArrayList<>();
         //вверх
-        if(isValidCoordinates(xCoord, yCoord + 1)){
-            coord.add(new Coordinates(xCoord, yCoord + 1));
-        }
+        isValidCoordinates(coord, xCoord, yCoord + 1);
         //вверх вправо
-        if(isValidCoordinates(xCoord + 1, yCoord + 1)){
-            coord.add(new Coordinates(xCoord + 1, yCoord + 1));
-        }
+        ;isValidCoordinates(coord, xCoord + 1, yCoord + 1);
         //вправо
-        if(isValidCoordinates(xCoord + 1, yCoord)){
-            coord.add(new Coordinates(xCoord + 1, yCoord));
-        }
+        isValidCoordinates(coord, xCoord + 1, yCoord);
         //вниз вправо
-        if(isValidCoordinates(xCoord + 1, yCoord - 1)){
-            coord.add(new Coordinates(xCoord + 1, yCoord - 1));
-        }
+        isValidCoordinates(coord, xCoord + 1, yCoord - 1);
         //вниз
-        if(isValidCoordinates(xCoord, yCoord-1)){
-            coord.add(new Coordinates(xCoord, yCoord-1));
-        }
+        isValidCoordinates(coord, xCoord, yCoord-1);
         //влево вниз
-        if(isValidCoordinates(xCoord -1, yCoord -1)){
-            coord.add(new Coordinates(xCoord -1, yCoord -1));
-        }
+        isValidCoordinates(coord, xCoord -1, yCoord -1);
         //влево
-        if(isValidCoordinates(xCoord - 1, yCoord)){
-            coord.add(new Coordinates(xCoord - 1, yCoord));
-        }
+        isValidCoordinates(coord, xCoord - 1, yCoord);
         //влево вверх
-        if(isValidCoordinates(xCoord - 1, yCoord + 1)){
-            coord.add(new Coordinates(xCoord - 1, yCoord +1));
-        }
-
+        isValidCoordinates(coord, xCoord - 1, yCoord + 1);
 
         return coord;
     }

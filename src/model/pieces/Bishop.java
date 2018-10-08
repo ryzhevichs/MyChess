@@ -23,36 +23,28 @@ public class Bishop extends Piece {
         List<Coordinates> coord = new ArrayList<>();
 
         // вверх вправо
-        for(int ix = getXCoord() + 1, jy = getYCoord() + 1; ix < board.getWidth() && jy < board.getHeight(); ix++, jy++ ) {
-            if(isValidCoordinates(ix,jy)){
-                coord.add(new Coordinates(ix,jy));
-                continue;
+        for(int ix = getXCoord() + 1, jy = getYCoord() + 1; ix < board.getWidth() && jy < board.getHeight(); ix++, jy++) {
+            if(isValidCoordinates(coord, ix, jy)) {
+                break;
             }
-            break;
         }
         // вверх влево
-        for(int ix = getXCoord() - 1, jy = getYCoord() + 1; ix >= 0 && jy < board.getHeight(); ix--, jy++ ) {
-            if(isValidCoordinates(ix,jy)){
-                coord.add(new Coordinates(ix,jy));
-                continue;
+        for(int ix = getXCoord() - 1, jy = getYCoord() + 1; ix >= 0 && jy < board.getHeight(); ix--, jy++) {
+            if (isValidCoordinates(coord, ix, jy)) {
+                break;
             }
-            break;
         }
         // вниз вправо
-        for(int ix = getXCoord() + 1, jy = getYCoord() - 1; ix < board.getWidth() && jy >= 0; ix++, jy-- ) {
-            if(isValidCoordinates(ix,jy)){
-                coord.add(new Coordinates(ix,jy));
-                continue;
+        for(int ix = getXCoord() + 1, jy = getYCoord() - 1; ix < board.getWidth() && jy >= 0; ix++, jy--) {
+            if(isValidCoordinates(coord, ix,jy)) {
+                break;
             }
-            break;
         }
         // вниз влево
-        for(int ix = getXCoord() - 1, jy = getYCoord() - 1; ix >= 0 && jy >= 0; ix--, jy-- ) {
-            if(isValidCoordinates(ix,jy)){
-                coord.add(new Coordinates(ix,jy));
-                continue;
+        for(int ix = getXCoord() - 1, jy = getYCoord() - 1; ix >= 0 && jy >= 0; ix--, jy--) {
+            if (isValidCoordinates(coord, ix, jy)) {
+                break;
             }
-            break;
         }
 
         return coord;

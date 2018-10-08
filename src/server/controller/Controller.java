@@ -12,6 +12,7 @@ public class Controller {
 
     public Controller(){
         createConnection();
+
     }
 
     private void createConnection(){
@@ -22,9 +23,12 @@ public class Controller {
             System.exit(-1);
         }
         try {
-            System.out.println("Ожидание клиента...");
-            client = serverSocket.accept();
-            System.out.println("Клиент подключён");
+            while(true) {
+                System.out.println("Ожидание клиента...");
+                client = serverSocket.accept();
+
+                System.out.println("Клиент подключён");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
