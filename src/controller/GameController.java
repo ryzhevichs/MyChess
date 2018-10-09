@@ -5,6 +5,7 @@ import model.Coordinates;
 import model.pieces.Piece;
 import model.Player;
 
+import view.ChessBoardView;
 import view.GameView;
 
 import javax.swing.*;
@@ -60,10 +61,13 @@ public class GameController {
                 removeMessage(chosenPiece, opponent);
                 removePiece(opponent);
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
-                chosenPiece = null;
+//                chosenPiece = null;
                 board.changeTurn();
                 turnMessage();
                 view.redraw();
+                if(isCheckmate()){
+                    gameOver();
+                }
             }
         }
     }
@@ -86,11 +90,18 @@ public class GameController {
                 view,"Победа " + chosenPiece.getPlayer() +"\nНачать заново?",
                 "Шах и мат",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION) {
-           startGame();
+            resetGame();
         }
         if(result == JOptionPane.NO_OPTION){
             System.exit(0);
         }
+    }
+
+    private void resetGame(){
+        view.frame.dispose();
+        board = null;
+        view = null;
+        new GameController().startGame();
     }
 
     private void removePiece(Piece p){
@@ -101,9 +112,6 @@ public class GameController {
             board.setBlackKingNull();
         }
         p.removeSelf();
-        if(isCheckmate()){
-           gameOver();
-        }
     }
 
     private boolean isCheckmate(){

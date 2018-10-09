@@ -65,4 +65,7 @@ public class GameView extends JPanel {
         frame.add(this);
     }
 
+    public ChessBoardView getChessBoardView() {
+        return this.boardView;
+    }
 }
