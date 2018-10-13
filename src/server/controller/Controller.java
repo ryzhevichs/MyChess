@@ -1,34 +1,28 @@
 package server.controller;
 
-import java.io.IOException;
+import model.Player;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Controller {
     public static final int PORT = 5678;
     private ServerSocket serverSocket;
-    private Socket client;
-
+    ObjectInputStream in;
+    ObjectOutputStream out;
 
     public Controller(){
         createConnection();
-
     }
 
-    private void createConnection(){
+    private void createConnection() {
         try {
-             serverSocket = new ServerSocket(PORT);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-        try {
-            while(true) {
-                System.out.println("Ожидание клиента...");
-                client = serverSocket.accept();
+            serverSocket = new ServerSocket(PORT);
+            System.out.println("Ожидание клиента...");
+            Socket socket = serverSocket.accept();
+            new GameController(Player.WHITE,socket).startGame();
 
-                System.out.println("Клиент подключён");
-            }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

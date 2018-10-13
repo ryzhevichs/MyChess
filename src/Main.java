@@ -1,20 +1,12 @@
-import client.ClientApplication;
-import controller.GameController;
-import model.ChessBoard;
-import server.ServerApplication;
-import view.GameView;
+import view.ConnectionDialog;
+
+import javax.swing.*;
 
 public class Main {
-//
-//    @Override
-//    public void run() {
-//        new Thread(new ServerApplication()).start();
-//        new Thread(new ClientApplication()).start();
-//
-//    }
 
     public static void main(String[] args){
-        new GameController().startGame();
-
+        SwingUtilities.invokeLater(() -> {
+            new ConnectionDialog();
+        });
     }
 }

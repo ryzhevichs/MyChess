@@ -1,6 +1,6 @@
 package view;
 
-import controller.GameController;
+import server.controller.GameController;
 import model.ChessBoard;
 import model.pieces.Piece;
 

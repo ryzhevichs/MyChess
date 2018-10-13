@@ -1,24 +1,28 @@
-package controller;
+package server.controller;
 
 import model.ChessBoard;
 import model.Coordinates;
 import model.pieces.Piece;
 import model.Player;
-
-import view.ChessBoardView;
 import view.GameView;
 
 import javax.swing.*;
+import java.net.Socket;
 import java.util.List;
 
 public class GameController {
     private ChessBoard board;
     private GameView view;
     private Piece chosenPiece;
+    private Communication communication;
+    private Player player;
+    private Socket socket;
 
-    public GameController(){
+    public GameController(Player player, Socket socket){
+        this.player = player;
         board = new ChessBoard(8,8);
         view = new GameView(board, 60);
+        communication = new Communication(socket, board);
         view.setController(this);
     }
 
@@ -61,7 +65,6 @@ public class GameController {
                 removeMessage(chosenPiece, opponent);
                 removePiece(opponent);
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
-//                chosenPiece = null;
                 board.changeTurn();
                 turnMessage();
                 view.redraw();
@@ -101,7 +104,7 @@ public class GameController {
         view.frame.dispose();
         board = null;
         view = null;
-        new GameController().startGame();
+        // new GameController(Player).startGame(); TODO
     }
 
     private void removePiece(Piece p){
