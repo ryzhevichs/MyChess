@@ -4,10 +4,11 @@ import model.ChessBoard;
 import model.Coordinates;
 import model.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
     private String name;
 
     protected int xCoord;

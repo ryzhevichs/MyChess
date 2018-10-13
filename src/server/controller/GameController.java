@@ -16,14 +16,16 @@ public class GameController {
     private Piece chosenPiece;
     private Communication communication;
     private Player player;
+//    private int turn;
     private Socket socket;
 
     public GameController(Player player, Socket socket){
         this.player = player;
         board = new ChessBoard(8,8);
-        view = new GameView(board, 60);
         communication = new Communication(socket, board);
+        view = new GameView(board,socket,player, 60);
         view.setController(this);
+//        turn = 1;
     }
 
     public void startGame() {
@@ -32,28 +34,38 @@ public class GameController {
         view.redraw();
         turnMessage();
     }
+//
+//    public Player getPlayerForTurn(){
+//        if (turn % 2 == 0){
+//            return Player.BLACK;
+//        } else {
+//            return Player.WHITE;
+//        }
+//    }
 
     public void checkClick(double clickedX, double clickedY) {
         int x, y;
         Piece p;
 
-        if (clickedX >= 0 && clickedY >= 0) {
-            x = (int) (clickedX / 60);
-            y = this.board.getHeight() - 1 - (int) (clickedY / 60);
-            p = this.board.getPieceAtCoordinate(x, y);
+            if (clickedX >= 0 && clickedY >= 0) {
+                x = (int) (clickedX / 60);
+                y = this.board.getHeight() - 1 - (int) (clickedY / 60);
+                p = this.board.getPieceAtCoordinate(x, y);
 
-            if (p != null) {
-                if (p.getPlayer() == board.getPlayerForTurn()) {
-                    this.chosenPiece = p;
-                    System.out.println(chosenPiece.getPlayer() + " " + chosenPiece.getName());
-                } else {
-                    if (chosenPiece == null) {
-                        return;
+                if (p != null) {
+                    if (p.getPlayer() == player) {
+                        this.chosenPiece = p;
+                        System.out.println(chosenPiece.getPlayer() + " " + chosenPiece.getName());
+                    } else {
+                        if (chosenPiece == null) {
+                            return;
+                        }
+                        movePieceToOpponentCell(p);
+                        communication.waitMove();
                     }
-                    movePieceToOpponentCell(p);
-                }
-            } else if (chosenPiece != null) {
-                movePieceToEmptyCell(x, y);
+                } else if (chosenPiece != null) {
+                    movePieceToEmptyCell(x, y);
+                    communication.waitMove();
             }
         }
     }
@@ -65,7 +77,7 @@ public class GameController {
                 removeMessage(chosenPiece, opponent);
                 removePiece(opponent);
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
-                board.changeTurn();
+//                changeTurn();
                 turnMessage();
                 view.redraw();
                 if(isCheckmate()){
@@ -80,8 +92,9 @@ public class GameController {
         for (Coordinates curCoord : coord) {
             if (curCoord.getX() == x && curCoord.getY() == y) {
                 chosenPiece.setCoordinate(x, y);
+                communication.sendMove(chosenPiece, x, y);
                 chosenPiece = null;
-                board.changeTurn();
+//                changeTurn();
                 turnMessage();
                 view.redraw();
             }
@@ -125,8 +138,16 @@ public class GameController {
         }
     }
 
+    public Player getPlayer(){
+        return player;
+    }
+
+//    public void changeTurn(){
+//        this.turn++;
+//    }
+
     private void turnMessage() {
-        if(board.getPlayerForTurn() == Player.WHITE) {
+        if(player == Player.WHITE) {
             System.out.println("Ход Белых");
         } else {
             System.out.println("Ход Чёрных");
@@ -134,7 +155,7 @@ public class GameController {
     }
 
     private void removeMessage(Piece chosen, Piece opponent){
-        System.out.println(chosen.getPlayer() + " " +chosenPiece.getName() +
+        System.out.println(chosen.getPlayer() + " " + chosenPiece.getName() +
                 " съел " + opponent.getPlayer() + " " + opponent.getName());
     }
 }

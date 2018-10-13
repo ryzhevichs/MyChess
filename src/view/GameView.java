@@ -1,10 +1,12 @@
 package view;
 
+import model.Player;
 import server.controller.GameController;
 import model.ChessBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 
 public class GameView extends JPanel {
 
@@ -15,14 +17,17 @@ public class GameView extends JPanel {
     private int cell_size;
     private int boardWidth;
     private int boardHeight;
-
+    private Socket socket;
+    private Player player;
     public JFrame frame;
 
     private int topPanelWidth = 30;
     private int topPanelHeight = 30;
 
-    public GameView(ChessBoard chessBoard, int cell){
+    public GameView(ChessBoard chessBoard, Socket socket, Player player, int cell){
         cell_size = cell;
+        this.socket = socket;
+        this.player = player;
         board = chessBoard;
         boardHeight = board.getHeight() * cell_size ;
         boardWidth = board.getWidth() * cell_size ;
@@ -45,7 +50,7 @@ public class GameView extends JPanel {
     public void initWindow(){
 
         boardView = new ChessBoardView(board, controller, cell_size, boardWidth,
-                boardHeight);
+                boardHeight,socket, player);
 
         this.add(boardView,BorderLayout.CENTER);
 

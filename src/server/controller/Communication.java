@@ -2,6 +2,7 @@ package server.controller;
 
 import model.ChessBoard;
 import model.Player;
+import model.pieces.Piece;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -25,6 +26,33 @@ public class Communication {
             e.printStackTrace();
             System.exit(0);
         }
+    }
 
+    public void sendMove(Piece piece, int x, int y){
+        try {
+            output.writeObject(piece);
+            output.writeObject(x);
+            output.writeObject(y);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void waitMove(){
+        while (true){
+            try{
+                Piece piece = (Piece)input.readObject();
+                int finalX = (int) input.readObject();
+                int finalY = (int) input.readObject();
+                board.removePiece(piece);
+                board.setPieceAtCoordinate(piece, finalX, finalY);
+
+                break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

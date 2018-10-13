@@ -1,5 +1,7 @@
 package view;
 
+import model.Player;
+import server.controller.Communication;
 import server.controller.GameController;
 import model.ChessBoard;
 import model.pieces.Piece;
@@ -11,22 +13,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.Socket;
 
 public class ChessBoardView extends JPanel{
     private ChessBoard board;
     private GameController controller;
+    private Communication communication;
+    private Player player;
     private int cell_size;
 
     private double mouseX = -1;
     private double mouseY = -1;
 
     public ChessBoardView(ChessBoard board, GameController controller, int cell_size,
-                          int boardWidth, int boardHeight){
+                          int boardWidth, int boardHeight, Socket socket, Player player) {
         this.board = board;
         this.controller = controller;
         this.cell_size = cell_size;
-        this.setPreferredSize(new Dimension(boardWidth, boardHeight));
+        communication = new Communication(socket, board);
+        this.player = player;
 
+
+        this.setPreferredSize(new Dimension(boardWidth, boardHeight));
 
         addMouseListener(new MouseAdapter() {
             @Override

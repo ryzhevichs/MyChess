@@ -2,9 +2,10 @@ package model;
 
 import model.pieces.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable {
 
     public static int BOARD_WIDTH;
     public static int BOARD_HEIGHT;
@@ -12,22 +13,20 @@ public class ChessBoard {
     private Piece tiles[][];
     private ArrayList<Piece> white;
     private ArrayList<Piece> black;
-    private int turn;
     private Piece kingWhite;
     private Piece kingBlack;
 
     public ChessBoard(int width, int height){
         BOARD_WIDTH = width;
         BOARD_HEIGHT = height;
-        turn = 1;
 
         tiles = new Piece[BOARD_HEIGHT][];
         for (int i = 0; i < BOARD_HEIGHT; i++){
             tiles[i] = new Piece[BOARD_WIDTH];
         }
-
         white = new ArrayList<>();
         black = new ArrayList<>();
+
     }
 
     public void addPieceToList(Piece p){
@@ -117,6 +116,7 @@ public class ChessBoard {
         p = new Queen(this, Player.BLACK);
         p.setCoordinate(3,7);
 
+
     }
 
     public void setPieceAtCoordinate (Piece p, int x, int y){
@@ -140,13 +140,6 @@ public class ChessBoard {
         this.tiles[y][x] = null;
     }
 
-    public Player getPlayerForTurn(){
-        if (turn % 2 == 0){
-            return Player.BLACK;
-        } else {
-            return Player.WHITE;
-        }
-    }
 
     public void setWhiteKingNull(){
         System.out.println("Белый король занулен");
@@ -166,9 +159,6 @@ public class ChessBoard {
         return kingBlack;
     }
 
-    public void changeTurn(){
-        this.turn++;
-    }
 
     public  int getWidth() {
         return BOARD_WIDTH;
