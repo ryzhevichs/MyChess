@@ -9,7 +9,9 @@ import view.GameView;
 
 import javax.swing.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class GameController {
     private ChessBoard board;
@@ -18,8 +20,6 @@ public class GameController {
     private ChessBoardView boardView;
     private Communication communication;
     private Player player;
-    private boolean endMove;
-
 
     public GameController(Player player, Socket socket){
         this.player = player;
@@ -27,7 +27,6 @@ public class GameController {
         communication = new Communication(socket, board);
         view = new GameView(board,socket,player, 60, this);
         this.boardView = view.getChessBoardView();
-        endMove = false;
     }
 
     public void startGame() {
@@ -61,7 +60,6 @@ public class GameController {
                         movePieceToOpponentCell(p);
                     }
                 } else if (chosenPiece != null) {
-
                     movePieceToEmptyCell(x, y);
             }
         }
@@ -80,11 +78,10 @@ public class GameController {
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
                 boardView.drawPiece(chosenPiece);
                 turnMessage();
-//                view.redraw();
-                communication.waitMove();
                 if(isCheckmate()){
                     gameOver();
                 }
+                communication.waitMove();
             }
         }
     }
@@ -95,7 +92,6 @@ public class GameController {
             if (curCoord.getX() == x && curCoord.getY() == y) {
                 boardView.drawPieceNull(chosenPiece.getXCoord(), chosenPiece.getYCoord());
                 communication.sendMove(chosenPiece, x, y);
-                communication.setEndMove(true);
                 chosenPiece.setCoordinate(x, y);
                 turnMessage();
                 boardView.drawPiece(chosenPiece);
@@ -106,26 +102,11 @@ public class GameController {
     }
 
     private void gameOver(){
-//        int result = JOptionPane.showConfirmDialog(
-//                view,"Победа " + chosenPiece.getPlayer() +"\nНачать заново?",
-//                "Шах и мат",JOptionPane.YES_NO_OPTION);
-//        if(result == JOptionPane.YES_OPTION) {
-//            resetGame();
-//        }
-//        if(result == JOptionPane.NO_OPTION){
-//            System.exit(0);
-//        }
         JOptionPane.showMessageDialog(null,
                 "Игра окончена!",
                 "Game Over",
                 JOptionPane.INFORMATION_MESSAGE);
 
-    }
-
-    private void resetGame(){
-        view.frame.dispose();
-        board = null;
-        view = null;
     }
 
     private void removePiece(Piece p){
@@ -166,5 +147,4 @@ public class GameController {
         System.out.println(chosen.getPlayer() + " " + chosenPiece.getName() +
                 " съел " + opponent.getPlayer() + " " + opponent.getName());
     }
-
 }

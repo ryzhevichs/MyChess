@@ -21,14 +21,11 @@ public class ChessBoardView extends JPanel{
     private Player player;
     private int cell_size;
     private JButton button;
-
-//    private  ActionController actionController;
-//
     private double mouseX = -1;
     private double mouseY = -1;
 
     public ChessBoardView(ChessBoard board, GameController controller, int cell_size,
-                          int boardWidth, int boardHeight, Socket socket, Player player, JButton button) {
+                          int boardWidth, int boardHeight, Socket socket, Player player) {
         this.board = board;
         this.controller = controller;
         this.cell_size = cell_size;
@@ -37,8 +34,6 @@ public class ChessBoardView extends JPanel{
 
         this.setPreferredSize(new Dimension(boardWidth, boardHeight));
 
-//        actionController = new ActionController(controller, communication);
-//        addMouseListener(actionController);
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -50,13 +45,9 @@ public class ChessBoardView extends JPanel{
                 System.out.println("X = " + outX + " Y = " + outY);
                 repaint();
                 controller.checkClick(mouseX, mouseY);
-
             }
         });
-
     }
-
-
 
     @Override
     public void paint(Graphics g) {
@@ -112,7 +103,6 @@ public class ChessBoardView extends JPanel{
         } else {
             drawCell(g2d,xCell,yCell,new Color(255, 206, 158));
         }
-
     }
 
         public void drawPiece( Piece p){
@@ -128,8 +118,6 @@ public class ChessBoardView extends JPanel{
                 System.out.println("Ошибка загрузки изображения!");
                 System.exit(0);
             }
-
-
         }
 
     public void drawBoard(Graphics2D g2d){
@@ -166,6 +154,5 @@ public class ChessBoardView extends JPanel{
                 }
             }
         }
-
     }
 }

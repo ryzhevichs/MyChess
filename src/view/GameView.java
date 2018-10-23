@@ -20,7 +20,6 @@ public class GameView extends JPanel {
     private Socket socket;
     private Player player;
     public JFrame frame;
-    private JButton button;
 
     private int topPanelWidth = 30;
     private int topPanelHeight = 30;
@@ -33,7 +32,7 @@ public class GameView extends JPanel {
         boardHeight = board.getHeight() * cell_size ;
         boardWidth = board.getWidth() * cell_size ;
         this.controller = controller;
-        boardView = new ChessBoardView(board, this.controller, cell_size, boardWidth, boardHeight,socket, player, button);
+        boardView = new ChessBoardView(board, this.controller, cell_size, boardWidth, boardHeight,socket, player);
         this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 
         this.setPreferredSize(new Dimension(boardWidth , boardHeight));

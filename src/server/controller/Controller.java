@@ -21,17 +21,6 @@ public class Controller {
             serverSocket = new ServerSocket(PORT);
             System.out.println("Ожидание клиента...");
             Socket socket = serverSocket.accept();
-//            try {
-//                System.out.println("заход в try server");
-//                GameController controller = new GameController(Player.BLACK, socket);
-//                out = new ObjectOutputStream(socket.getOutputStream());
-//                out.writeObject(controller);
-//                controller.startGame();
-                new GameController(Player.WHITE, socket).startGame();
-//            } catch (IOException e){
-//                e.printStackTrace();
-//            }
-
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

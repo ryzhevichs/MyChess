@@ -27,7 +27,6 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "Вы подключились");
             new GameController(Player.BLACK, connection).startGame();
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }

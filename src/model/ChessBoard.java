@@ -1,11 +1,9 @@
 package model;
 
 import model.pieces.*;
-import server.controller.Controller;
-import server.controller.GameController;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChessBoard implements Serializable {
 
@@ -13,8 +11,8 @@ public class ChessBoard implements Serializable {
     public static int BOARD_HEIGHT;
 
     private Piece tiles[][];
-    private ArrayList<Piece> white;
-    private ArrayList<Piece> black;
+    private List<Piece> white;
+    private List<Piece> black;
     private Piece kingWhite;
     private Piece kingBlack;
 
@@ -29,9 +27,6 @@ public class ChessBoard implements Serializable {
         }
         white = new ArrayList<>();
         black = new ArrayList<>();
-
-        System.out.println(this);
-
     }
 
 
@@ -198,9 +193,4 @@ public class ChessBoard implements Serializable {
             return false;
         }
     }
-
-    public void resetGame(){
-
-    }
-
 }

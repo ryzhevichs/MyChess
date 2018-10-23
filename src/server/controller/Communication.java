@@ -14,8 +14,6 @@ public class Communication {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ChessBoard board;
-    private boolean endMove;
-
 
     public Communication(Socket socket, ChessBoard board){
         this.board = board;
@@ -28,14 +26,6 @@ public class Communication {
             e.printStackTrace();
             System.exit(0);
         }
-    }
-
-    public boolean isEndMove() {
-        return endMove;
-    }
-
-    public void setEndMove(boolean endMove) {
-        this.endMove = endMove;
     }
 
     public void sendMove(Piece piece, int x, int y){
@@ -96,6 +86,5 @@ public class Communication {
                 e.printStackTrace();
             }
         }
-        endMove = false;
     }
 }
