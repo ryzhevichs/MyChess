@@ -4,6 +4,7 @@ import model.ChessBoard;
 import model.Coordinates;
 import model.pieces.Piece;
 import model.Player;
+import view.ChessBoardView;
 import view.GameView;
 
 import javax.swing.*;
@@ -14,18 +15,19 @@ public class GameController {
     private ChessBoard board;
     private GameView view;
     private Piece chosenPiece;
+    private ChessBoardView boardView;
     private Communication communication;
     private Player player;
-//    private int turn;
-    private Socket socket;
+    private boolean endMove;
+
 
     public GameController(Player player, Socket socket){
         this.player = player;
         board = new ChessBoard(8,8);
         communication = new Communication(socket, board);
-        view = new GameView(board,socket,player, 60);
-        view.setController(this);
-//        turn = 1;
+        view = new GameView(board,socket,player, 60, this);
+        this.boardView = view.getChessBoardView();
+        endMove = false;
     }
 
     public void startGame() {
@@ -33,15 +35,11 @@ public class GameController {
         board.setPiecesOnBoard();
         view.redraw();
         turnMessage();
+
+        if(player == Player.BLACK){
+            communication.waitMove();
+        }
     }
-//
-//    public Player getPlayerForTurn(){
-//        if (turn % 2 == 0){
-//            return Player.BLACK;
-//        } else {
-//            return Player.WHITE;
-//        }
-//    }
 
     public void checkClick(double clickedX, double clickedY) {
         int x, y;
@@ -61,11 +59,10 @@ public class GameController {
                             return;
                         }
                         movePieceToOpponentCell(p);
-                        communication.waitMove();
                     }
                 } else if (chosenPiece != null) {
+
                     movePieceToEmptyCell(x, y);
-                    communication.waitMove();
             }
         }
     }
@@ -75,11 +72,16 @@ public class GameController {
         for (Coordinates curCoord : coord) {
             if (opponent.getXCoord() == curCoord.getX() && opponent.getYCoord() == curCoord.getY()) {
                 removeMessage(chosenPiece, opponent);
+                communication.sendMove(opponent);
+                communication.sendMove(chosenPiece, curCoord.getX(), curCoord.getY());
+                boardView.drawPieceNull(opponent.getXCoord(), opponent.getYCoord());
                 removePiece(opponent);
+                boardView.drawPieceNull(chosenPiece.getXCoord(), chosenPiece.getYCoord());
                 chosenPiece.setCoordinate(curCoord.getX(), curCoord.getY());
-//                changeTurn();
+                boardView.drawPiece(chosenPiece);
                 turnMessage();
-                view.redraw();
+//                view.redraw();
+                communication.waitMove();
                 if(isCheckmate()){
                     gameOver();
                 }
@@ -91,33 +93,39 @@ public class GameController {
         List<Coordinates> coord = chosenPiece.getPossibleCoordinates();
         for (Coordinates curCoord : coord) {
             if (curCoord.getX() == x && curCoord.getY() == y) {
-                chosenPiece.setCoordinate(x, y);
+                boardView.drawPieceNull(chosenPiece.getXCoord(), chosenPiece.getYCoord());
                 communication.sendMove(chosenPiece, x, y);
-                chosenPiece = null;
-//                changeTurn();
+                communication.setEndMove(true);
+                chosenPiece.setCoordinate(x, y);
                 turnMessage();
-                view.redraw();
+                boardView.drawPiece(chosenPiece);
+                chosenPiece = null;
+                communication.waitMove();
             }
         }
     }
 
     private void gameOver(){
-        int result = JOptionPane.showConfirmDialog(
-                view,"Победа " + chosenPiece.getPlayer() +"\nНачать заново?",
-                "Шах и мат",JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION) {
-            resetGame();
-        }
-        if(result == JOptionPane.NO_OPTION){
-            System.exit(0);
-        }
+//        int result = JOptionPane.showConfirmDialog(
+//                view,"Победа " + chosenPiece.getPlayer() +"\nНачать заново?",
+//                "Шах и мат",JOptionPane.YES_NO_OPTION);
+//        if(result == JOptionPane.YES_OPTION) {
+//            resetGame();
+//        }
+//        if(result == JOptionPane.NO_OPTION){
+//            System.exit(0);
+//        }
+        JOptionPane.showMessageDialog(null,
+                "Игра окончена!",
+                "Game Over",
+                JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     private void resetGame(){
         view.frame.dispose();
         board = null;
         view = null;
-        // new GameController(Player).startGame(); TODO
     }
 
     private void removePiece(Piece p){
@@ -138,13 +146,13 @@ public class GameController {
         }
     }
 
+    public Communication getCommunication(){
+        return communication;
+    }
+
     public Player getPlayer(){
         return player;
     }
-
-//    public void changeTurn(){
-//        this.turn++;
-//    }
 
     private void turnMessage() {
         if(player == Player.WHITE) {
@@ -158,4 +166,5 @@ public class GameController {
         System.out.println(chosen.getPlayer() + " " + chosenPiece.getName() +
                 " съел " + opponent.getPlayer() + " " + opponent.getName());
     }
+
 }

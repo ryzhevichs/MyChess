@@ -10,4 +10,12 @@ public enum  Player {
             return WHITE;
         }
     }
+
+    public String getColor(){
+        if(this == WHITE){
+            return "White";
+        } else {
+            return "Black";
+        }
+    }
 }

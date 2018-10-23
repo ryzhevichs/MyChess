@@ -4,6 +4,7 @@ import server.controller.GameController;
 import model.Player;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 
@@ -25,6 +26,7 @@ public class Controller {
             System.out.println("Вы подключились к " + connection.getLocalSocketAddress());
             JOptionPane.showMessageDialog(null, "Вы подключились");
             new GameController(Player.BLACK, connection).startGame();
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,8 @@
 package model;
 
 import model.pieces.*;
+import server.controller.Controller;
+import server.controller.GameController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class ChessBoard implements Serializable {
     private Piece kingWhite;
     private Piece kingBlack;
 
+
     public ChessBoard(int width, int height){
         BOARD_WIDTH = width;
         BOARD_HEIGHT = height;
@@ -27,7 +30,10 @@ public class ChessBoard implements Serializable {
         white = new ArrayList<>();
         black = new ArrayList<>();
 
+        System.out.println(this);
+
     }
+
 
     public void addPieceToList(Piece p){
         if (p.getPlayer() == Player.WHITE){
@@ -37,89 +43,88 @@ public class ChessBoard implements Serializable {
         }
     }
 
-    public void setPiecesOnBoard(){
+    public void setPiecesOnBoard() {
         Piece p;
 
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(0,1);
+        p.setCoordinate(0, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(1,1);
+        p.setCoordinate(1, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(2,1);
+        p.setCoordinate(2, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(3,1);
+        p.setCoordinate(3, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(4,1);
+        p.setCoordinate(4, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(5,1);
+        p.setCoordinate(5, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(6,1);
+        p.setCoordinate(6, 1);
         p = new Pawn(this, Player.WHITE);
-        p.setCoordinate(7,1);
+        p.setCoordinate(7, 1);
 
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(0,6);
+        p.setCoordinate(0, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(1,6);
+        p.setCoordinate(1, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(2,6);
+        p.setCoordinate(2, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(3,6);
+        p.setCoordinate(3, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(4,6);
+        p.setCoordinate(4, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(5,6);
+        p.setCoordinate(5, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(6,6);
+        p.setCoordinate(6, 6);
         p = new Pawn(this, Player.BLACK);
-        p.setCoordinate(7,6);
+        p.setCoordinate(7, 6);
 
         p = new Bishop(this, Player.WHITE);
-        p.setCoordinate(2,0);
+        p.setCoordinate(2, 0);
         p = new Bishop(this, Player.WHITE);
-        p.setCoordinate(5,0);
+        p.setCoordinate(5, 0);
 
 
         p = new Bishop(this, Player.BLACK);
-        p.setCoordinate(2,7);
+        p.setCoordinate(2, 7);
         p = new Bishop(this, Player.BLACK);
-        p.setCoordinate(5,7);
+        p.setCoordinate(5, 7);
 
-        p = new Knight(this,Player.WHITE);
-        p.setCoordinate(1,0);
-        p = new Knight(this,Player.WHITE);
-        p.setCoordinate(6,0);
+        p = new Knight(this, Player.WHITE);
+        p.setCoordinate(1, 0);
+        p = new Knight(this, Player.WHITE);
+        p.setCoordinate(6, 0);
 
-        p = new Knight(this,Player.BLACK);
-        p.setCoordinate(1,7);
-        p = new Knight(this,Player.BLACK);
-        p.setCoordinate(6,7);
+        p = new Knight(this, Player.BLACK);
+        p.setCoordinate(1, 7);
+        p = new Knight(this, Player.BLACK);
+        p.setCoordinate(6, 7);
 
         p = new Rook(this, Player.WHITE);
-        p.setCoordinate(0,0);
+        p.setCoordinate(0, 0);
         p = new Rook(this, Player.WHITE);
-        p.setCoordinate(7,0);
+        p.setCoordinate(7, 0);
 
         p = new Rook(this, Player.BLACK);
-        p.setCoordinate(0,7);
+        p.setCoordinate(0, 7);
         p = new Rook(this, Player.BLACK);
-        p.setCoordinate(7,7);
+        p.setCoordinate(7, 7);
 
         kingWhite = new King(this, Player.WHITE);
-        kingWhite.setCoordinate(4,0);
+        kingWhite.setCoordinate(4, 0);
         kingBlack = new King(this, Player.BLACK);
-        kingBlack.setCoordinate(4,7);
+        kingBlack.setCoordinate(4, 7);
 
         p = new Queen(this, Player.WHITE);
-        p.setCoordinate(3,0);
+        p.setCoordinate(3, 0);
 
         p = new Queen(this, Player.BLACK);
-        p.setCoordinate(3,7);
-
-
+        p.setCoordinate(3, 7);
     }
 
     public void setPieceAtCoordinate (Piece p, int x, int y){
+
         tiles[y][x] = p;
     }
 
@@ -138,6 +143,24 @@ public class ChessBoard implements Serializable {
         int y = p.getYCoord();
 
         this.tiles[y][x] = null;
+    }
+
+    public void removePieceAtCoord(int x, int y){
+        Piece p = getPieceAtCoordinate(x, y);
+        if(p == this.getWhiteKing()) {
+            this.setWhiteKingNull();
+        }
+        if(p == this.getBlackKing()){
+            this.setBlackKingNull();
+        }
+        p.removeSelf();
+        this.tiles[y][x] = null;
+
+    }
+
+    public void setPieceAtNewCoordinate(Piece piece, Coordinates oldCoord, Coordinates newCoord) {
+        Piece p = getPieceAtCoordinate(oldCoord.getX(), oldCoord.getY());
+        p.setCoordinate(newCoord.getX(), newCoord.getY());
     }
 
 
@@ -168,5 +191,16 @@ public class ChessBoard implements Serializable {
         return BOARD_HEIGHT;
     }
 
+    public boolean isCheckmate(){
+        if(this.getBlackKing() == null || this.getWhiteKing() == null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void resetGame(){
+
+    }
 
 }

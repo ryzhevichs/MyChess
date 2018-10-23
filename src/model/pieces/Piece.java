@@ -1,5 +1,6 @@
 package model.pieces;
 
+import javafx.beans.Observable;
 import model.ChessBoard;
 import model.Coordinates;
 import model.Player;
@@ -12,6 +13,9 @@ public abstract class Piece implements Serializable {
     private String name;
 
     protected int xCoord;
+
+
+
     protected int yCoord;
 
     protected Player player;
@@ -56,9 +60,17 @@ public abstract class Piece implements Serializable {
         }
         this.xCoord = x;
         this.yCoord = y;
-
         board.setPieceAtCoordinate(this, x, y);
+
         return  true;
+    }
+
+    public void setX(int xCoord) {
+        this.xCoord = xCoord;
+    }
+
+    public void setY(int yCoord) {
+        this.yCoord = yCoord;
     }
 
     public abstract List<Coordinates> getPossibleCoordinates();
